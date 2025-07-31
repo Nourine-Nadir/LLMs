@@ -3,7 +3,7 @@ PARSER_CONFIG = {
     'flags' : ('-mn', '--model_name'),
     'help': 'The LLM model name',
     'type': str,
-    'default':'deepseek-r1:32b'
+    'default':'deepseek-r1:7b'
     },
     'embedding_model_name':{
     'flags' : ('-emn', '--embedding_model_name'),
