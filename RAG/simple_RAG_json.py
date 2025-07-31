@@ -7,11 +7,23 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 import textwrap
 import json
 import os
-# Initialize models
-embedding_model = OllamaEmbeddings(model="deepseek-r1:32b")
-llm = OllamaLLM(model="deepseek-r1:32b")  # Using OllamaLLM instead of Ollama
+from parser import Parser
+from args_config import PARSER_CONFIG
+try:
+    parser = Parser(prog='Design Of Experiments',
+                    description='Tools for design of experiments purposes')
+    args = parser.get_args(
+        PARSER_CONFIG
+    )
+except ValueError as e:
+    args = None
+    print(e)
 
-json_path = "../Data/JSON_data/All_laws.json"
+# Initialize models
+embedding_model = OllamaEmbeddings(model=args.embedding_model_name)
+llm = OllamaLLM(model=args.model_name)  # Using OllamaLLM instead of Ollama
+
+json_path = args.data_filepath
 
 with open(json_path, 'r', encoding='utf-8') as f:
     articles = json.load(f)
@@ -59,13 +71,7 @@ def TF_IDF_retrrierval(texts:list, query:str, top_k:int = 10)-> list:
     #     print("-" * 50)
 
     return results_dict, texts
-# # Split text into chunks
-# text_splitter = RecursiveCharacterTextSplitter(
-#     chunk_size=1000,
-#     chunk_overlap=200,
-#     separators=["\n\n"," ", ""]
-# )
-# texts = text_splitter.split_text(full_text)
+
 
 
 
@@ -108,17 +114,25 @@ def rag_query(question, vectorstore):
 
 # Example usage
 question = "Quand est-ce que la peine de mort est applique ?  "
-_, close_texts = TF_IDF_retrrierval(texts, question, 5)
-# text_splitter = RecursiveCharacterTextSplitter(
-#     chunk_size=1000,
-#     chunk_overlap=200,
-#     separators=["\n\n"," ", ""]
-# )
-# close_texts = text_splitter.split_text(close_texts)
+if args.tf_idf:
+    print('Using TF-IDF')
+    _, close_texts = TF_IDF_retrrierval(texts, question, top_k=args.tf_idf_topk)
+    print(f'close texts : {close_texts}')
+    vectorstore = FAISS.from_texts(texts=close_texts, embedding=embedding_model)
+#
+# else:
+#     print('No TF-IDF')
+#     # Split into chunks
+#     text_splitter = RecursiveCharacterTextSplitter(
+#         chunk_size=1000,
+#         chunk_overlap=200,
+#         separators=["\n\n"," ", ""]
+#     )
+#     texts = text_splitter.split_text(texts)
+#     vectorstore = FAISS.from_texts(texts=texts, embedding=embedding_model)
+
 
 # Create FAISS vector store
-print(f'close texts : {close_texts}')
-vectorstore = FAISS.from_texts(texts=close_texts, embedding=embedding_model)
 #
 answer = rag_query(question, vectorstore)
 
