@@ -3,20 +3,20 @@ PARSER_CONFIG = {
     'flags' : ('-mn', '--model_name'),
     'help': 'The LLM model name',
     'type': str,
-    'default':'deepseek-r1:7b'
+    'default':'mistral:instruct'
     },
     'embedding_model_name':{
     'flags' : ('-emn', '--embedding_model_name'),
     'help': 'The embedding model name',
     'type': str,
-    'default':'deepseek-r1:7b'
+    'default':'deepseek-r1:14b'
     },
 
     'data_filepath':{
             'flags' : ('-dfp', '--data_filepath'),
             'help': 'JSON data file path for context extraction',
             'type':str,
-            'default': '../Data/JSON_data/All_laws.json'
+            'default': '../../Data/JSON_data/All_laws.json'
         },
 
     'tf_idf':{
