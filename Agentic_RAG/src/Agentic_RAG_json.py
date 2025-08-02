@@ -1,18 +1,17 @@
-from os import close
-
+# Import Packages
 from langchain_community.vectorstores import FAISS
 from langchain_ollama.embeddings import OllamaEmbeddings
 from langchain_ollama.llms import OllamaLLM  # Note the changed class name
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 import textwrap
-import json
-import os
+
+# Import modules
 from parser import Parser
 from args_config import PARSER_CONFIG
 from utils import get_data, TF_IDF_retrrierval
 try:
-    parser = Parser(prog='Design Of Experiments',
-                    description='Tools for design of experiments purposes')
+    parser = Parser(prog='Simple RAG Framework',
+                    description='Agentic RAG pipeline for legal questions')
     args = parser.get_args(
         PARSER_CONFIG
     )
@@ -88,19 +87,6 @@ agent = initialize_agent(
     verbose=True,
     handle_parsing_errors=True
 )
-# Create FAISS vector store
-# docs = vectorstore.similarity_search(question, k=10)
-# # lambda_mult : degree of diversity among the results 0 = max diversity, 1 = min diversity
-#
-# print("==== Retrieved Documents (Context Chunks) ====")
-# for i, doc in enumerate(docs, 1):
-#     print(f"\n--- Document {i} (Length: {len(doc.page_content)} chars) ---")
-#     print(doc.page_content)
-#     print("Metadata:", doc.metadata)
-#     print("-" * 50)
-#
-# # Combine context from retrieved documents
-# context = "\n\n".join([doc.page_content for doc in docs])
 
 # Create prompt with context
 prompt = """Follow these rules:

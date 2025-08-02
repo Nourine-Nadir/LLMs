@@ -1,18 +1,17 @@
-from os import close
-
+# Import Packages
 from langchain_community.vectorstores import FAISS
 from langchain_ollama.embeddings import OllamaEmbeddings
 from langchain_ollama.llms import OllamaLLM  # Note the changed class name
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 import textwrap
-import json
-import os
+
+# Import modules
 from parser import Parser
 from args_config import PARSER_CONFIG
 from utils import get_data, TF_IDF_retrrierval
 try:
-    parser = Parser(prog='Design Of Experiments',
-                    description='Tools for design of experiments purposes')
+    parser = Parser(prog='Simple RAG Framework',
+                    description='RAG pipeline for legal questions')
     args = parser.get_args(
         PARSER_CONFIG
     )
