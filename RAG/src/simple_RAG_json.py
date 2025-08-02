@@ -77,10 +77,8 @@ if args.tf_idf:
     _, close_texts = TF_IDF_retrrierval(texts, question, top_k=args.tf_idf_topk)
     print(f'close texts : {close_texts}')
     print(f'retrieving docs similarity in TF-IDF...')
-    vectorstore = FAISS.from_texts(texts=close_texts, embedding=embedding_model)
 
     context = ("\n\n".join(close_texts))
-
     # Create prompt with context
     prompt = f"""
         This are the three rules to follow before answering
@@ -96,6 +94,7 @@ if args.tf_idf:
         Question: {question}
 
         """
+    print(f'LLM call ...')
     answer = llm.invoke(prompt)
 
 else:

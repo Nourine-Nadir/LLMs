@@ -9,7 +9,7 @@ PARSER_CONFIG = {
     'flags' : ('-emn', '--embedding_model_name'),
     'help': 'The embedding model name',
     'type': str,
-    'default':'deepseek-r1:14b'
+    'default':'nomic-embed-text'
     },
 
     'data_filepath':{
