@@ -10,13 +10,11 @@ def get_data(json_path):
             if key == "metadata":
                 current_meta = content
                 metadatas.append(current_meta)
-                texts.append('No Text')
 
 
             else:
                 text = f"{key}\n{content}"
                 texts.append(text)
-                metadatas.append('No Metadata')
 
     return texts, metadatas
 
