@@ -1,5 +1,6 @@
 # Import packages
-from transformers import BertTokenizerFast, BertForPreTraining, Trainer, TrainingArguments, DataCollatorForLanguageModeling
+from transformers import  Trainer, TrainingArguments, DataCollatorForLanguageModeling
+from transformers import CamembertTokenizer, CamembertForMaskedLM
 
 # Import modules
 from parser import Parser
@@ -25,8 +26,8 @@ print(f'len of sents pairs : {len(sentence_pairs)}')
 # Initialize model
 train= True
 if train:
-    tokenizer = BertTokenizerFast.from_pretrained("bert-base-uncased")
-    model = BertForPreTraining.from_pretrained("bert-base-uncased")
+    tokenizer = CamembertTokenizer.from_pretrained("camembert-base", return_overflowing_tokens=False)
+    model = CamembertForMaskedLM.from_pretrained("camembert-base")
 
     dataset = NSPDataset(sentence_pairs, tokenizer)
 
@@ -37,7 +38,7 @@ if train:
     )
 
     training_args = TrainingArguments(
-        output_dir="./BERT_mlm_nsp",
+        output_dir="./camemBERT_mlm_nsp",
         overwrite_output_dir=True,
         num_train_epochs=3,
         per_device_train_batch_size=8,
@@ -57,5 +58,5 @@ if train:
     print('Start training...')
     trainer.train()
 
-    model.save_pretrained("./BERT_mlm_nsp")
-    tokenizer.save_pretrained("./BERT_mlm_nsp")
+    model.save_pretrained("./camemBERT_mlm_nsp")
+    tokenizer.save_pretrained("./camemBERT_mlm_nsp")

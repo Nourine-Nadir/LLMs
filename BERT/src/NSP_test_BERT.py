@@ -9,7 +9,7 @@ model.eval()
 # Sample sentence pairs
 sentence_a = "Les produits imposables réceptionnés par les entrepositaires doivent être immédiatement"
 sentence_b_true = "pris encharge dans les comptes matières et l’acquit-à-caution ayant légitimé leur"
-sentence_b_false = "Il en est de même de tous autres registres pouvant servir à établir les droits du"
+sentence_b_false = "Le chat est beau"
 
 def predict_nsp(sent1, sent2):
     encoding = tokenizer(

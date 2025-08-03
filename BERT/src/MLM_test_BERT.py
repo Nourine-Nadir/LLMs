@@ -5,8 +5,6 @@ tokenizer = BertTokenizerFast.from_pretrained("./bert_mlm_nsp")
 model = BertForPreTraining.from_pretrained("./bert_mlm_nsp")
 model.eval()
 
-# Sentence with mask token
-masked_sentence = "Le code des impôts indirects comporte l’ensemble des dispositions [MASK]."
 
 def predict_mask(sentence):
     inputs = tokenizer(sentence, return_tensors="pt")
@@ -25,5 +23,7 @@ def predict_mask(sentence):
         token = tokenizer.decode([token_id])
         print(f"  - {token}")
 
+# Sentence with mask token
+masked_sentence = "Le code des impôts indirects comporte l’ensemble des dispositions [MASK]."
 # Run test
 predict_mask(masked_sentence)
